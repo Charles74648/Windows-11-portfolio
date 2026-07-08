@@ -1,0 +1,1926 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Windows 11 Developer Portfolio</title>
+    
+    <!-- Bootstrap 5 CSS via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Bootstrap Icons via CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    
+    <!-- Custom Windows 11 Desktop Style -->
+    <link rel="stylesheet" href="/src/css/style.css">
+  </head>
+  <body>
+
+    <!-- ================================================================= -->
+    <!-- WINDOWS 11 SYSTEM OVERLAY (SHUTDOWN / RESTART)                    -->
+    <!-- ================================================================= -->
+    <div class="system-overlay" id="system-overlay">
+      <div id="overlay-content" class="text-center text-white d-flex flex-column align-items-center justify-content-center">
+        <!-- Content will be injected dynamically via JS -->
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- WINDOWS 11 BOOT SEQUENCE SCREEN                                   -->
+    <!-- ================================================================= -->
+    <div id="boot-screen" class="boot-screen">
+      <!-- BIOS Diagnostic Phase -->
+      <div id="boot-bios-view" class="boot-bios-container">
+        <div class="bios-header">
+          <div class="d-flex align-items-center gap-2 text-primary mb-3">
+            <i class="bi bi-cpu-fill fs-3 text-white"></i>
+            <span class="fw-bold text-white tracking-wider">DEV CHARLES WEB BIOS v3.5</span>
+          </div>
+          <p class="text-secondary small mb-4 font-monospace">Copyright (C) 2026 Google AI Studio. All Rights Reserved.</p>
+        </div>
+        <div class="bios-specs text-secondary font-monospace text-start" style="font-size: 13px;">
+          <p class="mb-1">> CPU: Gemini 3.5 Flash @ Hyper-Speed Core</p>
+          <p class="mb-1">> RAM: 64.0 GB Hyper-Speed Memory</p>
+          <p class="mb-1">> SSD: NVMe 1.0 TB (Status: HEALTHY)</p>
+          <p class="mb-1">> Host: Cloud Run Container Subsystem</p>
+          <p class="mb-3">> Display: Responsive Web Canvas</p>
+          
+          <div class="bios-log font-monospace" id="bios-log">
+            <!-- Sequential lines will be printed dynamically -->
+          </div>
+        </div>
+        <div class="bios-footer text-muted font-monospace mt-4 pt-3 border-top border-secondary text-center small" style="font-size: 11px;">
+          <span>Press <strong class="text-white">Esc</strong> or click anywhere to skip boot sequence</span>
+        </div>
+      </div>
+
+      <!-- Windows OS Loading Phase -->
+      <div id="boot-os-view" class="boot-os-container d-none text-center">
+        <!-- Modern CSS Windows 11 Logo -->
+        <div class="win11-boot-logo mb-5">
+          <div class="logo-grid">
+            <div class="logo-sq"></div>
+            <div class="logo-sq"></div>
+            <div class="logo-sq"></div>
+            <div class="logo-sq"></div>
+          </div>
+        </div>
+        
+        <!-- Windows 11 Spinner -->
+        <div class="win-spinner mx-auto mb-4">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+        
+        <p class="text-white-50 small font-monospace mt-3" id="boot-os-status">Starting Windows 11...</p>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- WINDOWS 11 LOCK SCREEN / LANDING PAGE                             -->
+    <!-- ================================================================= -->
+    <div class="lock-screen" id="lock-screen">
+      <!-- Background (blurred on login screen) -->
+      <div class="lock-screen-bg" id="lock-screen-bg"></div>
+
+      <!-- Lock Screen Clock View -->
+      <div class="lock-screen-main-view" id="lock-screen-main-view">
+        <div class="lock-screen-clock-container">
+          <h1 class="lock-screen-time" id="lock-screen-time">12:00</h1>
+          <p class="lock-screen-date" id="lock-screen-date">Wednesday, July 8</p>
+        </div>
+
+        <!-- Lock Screen widgets / status updates -->
+        <div class="lock-screen-widgets">
+          <!-- Weather Widget -->
+          <div class="lock-screen-widget-card" id="lock-widget-weather">
+            <div class="widget-icon text-info">
+              <i class="bi bi-cloud-sun-fill"></i>
+            </div>
+            <div class="widget-info">
+              <span class="widget-title">London</span>
+              <span class="widget-desc">21°C • Partly Cloudy</span>
+            </div>
+          </div>
+          <!-- Tip Widget -->
+          <div class="lock-screen-widget-card d-none d-md-flex" id="lock-widget-tip">
+            <div class="widget-icon text-warning">
+              <i class="bi bi-lightbulb-fill"></i>
+            </div>
+            <div class="widget-info">
+              <span class="widget-title">Quick Tip</span>
+              <span class="widget-desc">Search the Start Menu to find skills & projects!</span>
+            </div>
+          </div>
+          <!-- Notification Widget -->
+          <div class="lock-screen-widget-card" id="lock-widget-notify">
+            <div class="widget-icon text-primary">
+              <i class="bi bi-chat-left-dots-fill"></i>
+            </div>
+            <div class="widget-info">
+              <span class="widget-title settings-user-display">DEV CHARLES WEB</span>
+              <span class="widget-desc">1 new message waiting for you</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bounce Unlock Prompt -->
+        <div class="lock-screen-prompt-container" id="lock-screen-prompt">
+          <div class="lock-screen-chevron">
+            <i class="bi bi-chevron-up"></i>
+          </div>
+          <p class="lock-screen-prompt-text">Click, tap, or press any key to unlock</p>
+        </div>
+      </div>
+
+      <!-- Lock Screen Sign-In View -->
+      <div class="lock-screen-signin-view d-none" id="lock-screen-signin-view">
+        <!-- Back Arrow -->
+        <button class="lock-screen-back-btn" id="lock-screen-back-btn" title="Back to lock clock">
+          <i class="bi bi-arrow-left"></i>
+        </button>
+
+        <div class="signin-container">
+          <!-- Profile Avatar with Online indicator -->
+          <div class="signin-avatar-container">
+            <div class="signin-avatar">
+              <i class="bi bi-person-fill"></i>
+            </div>
+            <span class="signin-status-dot"></span>
+          </div>
+
+          <h2 class="signin-username settings-user-display">DEV CHARLES WEB</h2>
+          <p class="signin-usertype text-muted">Developer Portfolio</p>
+
+          <!-- PIN Field wrapper -->
+          <div class="signin-input-wrapper">
+            <input type="password" class="form-control signin-pin-input" id="lock-pin-input" placeholder="PIN" maxlength="4" autocomplete="off">
+            <button class="signin-reveal-btn" id="lock-pin-reveal-btn" title="Reveal PIN" aria-label="Reveal PIN">
+              <i class="bi bi-eye"></i>
+            </button>
+            <button class="signin-enter-btn" id="lock-pin-submit-btn" title="Sign In" aria-label="Sign In">
+              <i class="bi bi-arrow-right-short"></i>
+            </button>
+          </div>
+
+          <div class="signin-hint mt-2 text-muted" id="signin-hint">
+            Type any 4-digit PIN or click Sign In to unlock
+          </div>
+
+          <!-- Pin Keypad -->
+          <div class="signin-keypad" id="signin-keypad">
+            <button class="keypad-btn" data-val="1">1</button>
+            <button class="keypad-btn" data-val="2">2</button>
+            <button class="keypad-btn" data-val="3">3</button>
+            <button class="keypad-btn" data-val="4">4</button>
+            <button class="keypad-btn" data-val="5">5</button>
+            <button class="keypad-btn" data-val="6">6</button>
+            <button class="keypad-btn" data-val="7">7</button>
+            <button class="keypad-btn" data-val="8">8</button>
+            <button class="keypad-btn" data-val="9">9</button>
+            <button class="keypad-btn delete" data-val="del" title="Delete"><i class="bi bi-backspace"></i></button>
+            <button class="keypad-btn" data-val="0">0</button>
+            <button class="keypad-btn clear" data-val="clear" title="Clear">C</button>
+          </div>
+
+          <!-- Sign-In Options -->
+          <div class="signin-options mt-4">
+            <span class="small text-muted d-block mb-2">Sign-in options</span>
+            <div class="d-flex justify-content-center gap-3">
+              <button class="signin-option-btn active" id="option-pin" title="PIN Sign-in" aria-label="PIN Sign-in">
+                <i class="bi bi-grid-3x3-gap"></i>
+              </button>
+              <button class="signin-option-btn" id="option-password" title="Password Sign-in" aria-label="Password Sign-in">
+                <i class="bi bi-key-fill"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lock Screen Bottom-Right System Indicators -->
+        <div class="lock-screen-controls">
+          <div class="lock-control-item" id="lock-control-wifi" title="Internet: Connected">
+            <i class="bi bi-wifi"></i>
+          </div>
+          <div class="lock-control-item" id="lock-control-battery" title="Battery Status: 72% remaining">
+            <i class="bi bi-battery-half"></i>
+          </div>
+          <div class="lock-control-item" id="lock-control-power" title="Shut Down / Restart" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-power"></i>
+          </div>
+          <ul class="dropdown-menu dropdown-menu-dark dropdown-menu-end shadow border border-secondary-subtle" style="font-size: 12px; border-radius: 8px;">
+            <li><a class="dropdown-item py-2 d-flex align-items-center gap-2" href="#" id="lock-power-restart"><i class="bi bi-arrow-clockwise"></i> Restart</a></li>
+            <li><a class="dropdown-item py-2 d-flex align-items-center gap-2" href="#" id="lock-power-shutdown"><i class="bi bi-power text-danger"></i> Shut Down</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- 1. DESKTOP WORKSPACE AREA                                         -->
+    <!-- ================================================================= -->
+    <main class="desktop-area">
+      
+      <!-- Container for desktop icons arranged vertically on the left -->
+      <div class="desktop-icons-container" id="desktop-grid">
+        
+        <!-- Desktop Icon: About Me -->
+        <a href="#" class="desktop-icon" id="desktop-about-btn" data-bs-toggle="modal" data-bs-target="#about-modal" data-bs-placement="right" title="About Me">
+          <div class="desktop-icon-image">
+            <i class="bi bi-person-circle"></i>
+          </div>
+          <div class="desktop-icon-label">About Me</div>
+        </a>
+
+        <!-- Desktop Icon: Projects -->
+        <a href="#" class="desktop-icon" id="desktop-projects-btn" data-bs-toggle="modal" data-bs-target="#projects-modal" data-bs-placement="right" title="Projects">
+          <div class="desktop-icon-image">
+            <i class="bi bi-folder-fill"></i>
+          </div>
+          <div class="desktop-icon-label">Projects</div>
+        </a>
+
+        <!-- Desktop Icon: Skills -->
+        <a href="#" class="desktop-icon" id="desktop-skills-btn" data-bs-toggle="modal" data-bs-target="#skills-modal" data-bs-placement="right" title="My Skills">
+          <div class="desktop-icon-image">
+            <i class="bi bi-award-fill"></i>
+          </div>
+          <div class="desktop-icon-label">My Skills</div>
+        </a>
+
+        <!-- Desktop Icon: Resume -->
+        <a href="#" class="desktop-icon" id="desktop-resume-btn" data-bs-toggle="modal" data-bs-target="#resume-modal" data-bs-placement="right" title="Resume">
+          <div class="desktop-icon-image">
+            <i class="bi bi-file-earmark-text-fill"></i>
+          </div>
+          <div class="desktop-icon-label">Resume.pdf</div>
+        </a>
+
+        <!-- Desktop Icon: Contact -->
+        <a href="#" class="desktop-icon" id="desktop-contact-btn" data-bs-toggle="modal" data-bs-target="#contact-modal" data-bs-placement="right" title="Contact Me">
+          <div class="desktop-icon-image">
+            <i class="bi bi-envelope-fill"></i>
+          </div>
+          <div class="desktop-icon-label">Contact Me</div>
+        </a>
+
+        <!-- Desktop Icon: Recycle Bin (Standard empty Windows trash can) -->
+        <a href="#" class="desktop-icon" id="desktop-recycle-btn" data-bs-toggle="modal" data-bs-target="#recycle-modal" data-bs-placement="right" title="Recycle Bin">
+          <div class="desktop-icon-image">
+            <i class="bi bi-trash3-fill" id="recycle-bin-icon"></i>
+          </div>
+          <div class="desktop-icon-label">Recycle Bin</div>
+        </a>
+
+      </div>
+
+    </main>
+
+    <!-- ================================================================= -->
+    <!-- 2. WINDOWS 11 TASKBAR (BOTTOM)                                    -->
+    <!-- ================================================================= -->
+    <footer class="win11-taskbar">
+      
+      <!-- Left Section: Widgets Panel / Weather status -->
+      <div class="taskbar-left">
+        <div class="widgets-indicator" data-bs-toggle="tooltip" data-bs-placement="top" title="Windows Widgets & Weather">
+          <i class="bi bi-cloud-sun-fill"></i>
+          <span class="d-none d-sm-inline">21°C</span>
+        </div>
+      </div>
+
+      <!-- Center Section: Pinned/Active shortcuts centered on taskbar -->
+      <div class="taskbar-center">
+        
+        <!-- Pinned Icon: Start Menu Button -->
+        <div class="taskbar-item" id="start-menu-button" data-bs-toggle="tooltip" data-bs-placement="top" title="Start">
+          <div class="win11-start-logo">
+            <span class="win-sq"></span>
+            <span class="win-sq"></span>
+            <span class="win-sq"></span>
+            <span class="win-sq"></span>
+          </div>
+        </div>
+
+        <!-- Pinned Icon: Search -->
+        <div class="taskbar-item" data-bs-toggle="tooltip" data-bs-placement="top" title="Search">
+          <i class="bi bi-search"></i>
+        </div>
+
+        <!-- Pinned Icon: Task View -->
+        <div class="taskbar-item d-none d-xs-flex" data-bs-toggle="tooltip" data-bs-placement="top" title="Task view">
+          <i class="bi bi-grid-1x2"></i>
+        </div>
+
+        <!-- App Icon: About Me -->
+        <div class="taskbar-item" id="taskbar-about-btn" data-bs-toggle="modal" data-bs-target="#about-modal" data-bs-placement="top" title="About Me">
+          <i class="bi bi-person-circle"></i>
+        </div>
+
+        <!-- App Icon: Projects -->
+        <div class="taskbar-item" id="taskbar-projects-btn" data-bs-toggle="modal" data-bs-target="#projects-modal" data-bs-placement="top" title="Projects">
+          <i class="bi bi-folder-fill"></i>
+        </div>
+
+        <!-- App Icon: Skills -->
+        <div class="taskbar-item" id="taskbar-skills-btn" data-bs-toggle="modal" data-bs-target="#skills-modal" data-bs-placement="top" title="My Skills">
+          <i class="bi bi-award-fill"></i>
+        </div>
+
+        <!-- App Icon: Resume -->
+        <div class="taskbar-item" id="taskbar-resume-btn" data-bs-toggle="modal" data-bs-target="#resume-modal" data-bs-placement="top" title="Resume">
+          <i class="bi bi-file-earmark-text-fill"></i>
+        </div>
+
+        <!-- App Icon: Contact -->
+        <div class="taskbar-item" id="taskbar-contact-btn" data-bs-toggle="modal" data-bs-target="#contact-modal" data-bs-placement="top" title="Contact Me">
+          <i class="bi bi-envelope-fill"></i>
+        </div>
+
+      </div>
+
+      <!-- Right Section: System Tray (Tray indicators, Date & Time, Action Center) -->
+      <div class="taskbar-right">
+        
+        <!-- WiFi, Volume, Battery Capsule -->
+        <div class="systray-capsule" id="systray-capsule" data-bs-toggle="tooltip" data-bs-placement="top" title="Quick Settings">
+          <i class="bi bi-wifi" id="systray-wifi"></i>
+          <i class="bi bi-volume-up-fill" id="systray-volume"></i>
+          <i class="bi bi-battery-half" id="systray-battery"></i>
+        </div>
+
+        <!-- Date & Time Capsule -->
+        <div class="clock-capsule" id="clock-capsule" data-bs-toggle="tooltip" data-bs-placement="top" title="Calendar & Notifications">
+          <span class="clock-time" id="clock-time">10:00 AM</span>
+          <span class="clock-date" id="clock-date">7/4/2026</span>
+        </div>
+
+        <!-- Notification Bell Capsule -->
+        <div class="notification-capsule" data-bs-toggle="tooltip" data-bs-placement="top" title="No new notifications">
+          <i class="bi bi-bell-fill"></i>
+          <span class="notification-badge"></span>
+        </div>
+
+        <!-- Edge sliver to minimize all (A Windows trademark feature) -->
+        <div class="desktop-show-sliver" data-bs-toggle="tooltip" data-bs-placement="top" title="Clear desktop"></div>
+
+      </div>
+
+    </footer>
+
+    <!-- ================================================================= -->
+    <!-- 3. WINDOWS 11 START MENU (FLOATING)                               -->
+    <!-- ================================================================= -->
+    <div class="start-menu-panel" id="start-menu">
+      
+      <!-- Top Search Box Area -->
+      <div class="start-search-container">
+        <div class="start-search-box">
+          <i class="bi bi-search"></i>
+          <input type="text" class="start-search-input" placeholder="Type here to search..." aria-label="Search apps, files, and settings">
+        </div>
+      </div>
+
+      <!-- Pinned Apps Section -->
+      <div class="start-pinned-section">
+        <div class="start-section-header">
+          <span class="start-section-title">Pinned</span>
+          <button class="btn btn-sm btn-light start-all-apps-btn">
+            All apps <i class="bi bi-chevron-right"></i>
+          </button>
+        </div>
+        
+        <!-- Pinned Grid -->
+        <div class="start-pinned-grid">
+          
+          <a href="#" class="start-grid-item" id="start-about-btn" data-bs-toggle="modal" data-bs-target="#about-modal" data-app="about">
+            <div class="start-grid-icon">
+              <i class="bi bi-person-circle"></i>
+            </div>
+            <span class="start-grid-label">About Me</span>
+          </a>
+
+          <a href="#" class="start-grid-item" id="start-projects-btn" data-bs-toggle="modal" data-bs-target="#projects-modal" data-app="projects">
+            <div class="start-grid-icon">
+              <i class="bi bi-folder-fill"></i>
+            </div>
+            <span class="start-grid-label">Projects</span>
+          </a>
+
+          <a href="#" class="start-grid-item" id="start-skills-btn" data-bs-toggle="modal" data-bs-target="#skills-modal" data-app="skills">
+            <div class="start-grid-icon">
+              <i class="bi bi-award-fill"></i>
+            </div>
+            <span class="start-grid-label">Skills</span>
+          </a>
+
+          <a href="#" class="start-grid-item" id="start-resume-btn" data-bs-toggle="modal" data-bs-target="#resume-modal" data-app="resume">
+            <div class="start-grid-icon">
+              <i class="bi bi-file-earmark-text-fill"></i>
+            </div>
+            <span class="start-grid-label">Resume</span>
+          </a>
+
+          <a href="#" class="start-grid-item" id="start-contact-btn" data-bs-toggle="modal" data-bs-target="#contact-modal" data-app="contact">
+            <div class="start-grid-icon">
+              <i class="bi bi-envelope-fill"></i>
+            </div>
+            <span class="start-grid-label">Contact</span>
+          </a>
+
+          <a href="#" class="start-grid-item" id="start-recycle-btn" data-bs-toggle="modal" data-bs-target="#recycle-modal" data-app="recycle">
+            <div class="start-grid-icon">
+              <i class="bi bi-trash3-fill" id="start-recycle-icon"></i>
+            </div>
+            <span class="start-grid-label">Recycle Bin</span>
+          </a>
+
+          <a href="https://github.com" target="_blank" class="start-grid-item">
+            <div class="start-grid-icon">
+              <i class="bi bi-github"></i>
+            </div>
+            <span class="start-grid-label">GitHub</span>
+          </a>
+
+          <a href="#" class="start-grid-item" data-app="settings">
+            <div class="start-grid-icon">
+              <i class="bi bi-gear-fill"></i>
+            </div>
+            <span class="start-grid-label">Settings</span>
+          </a>
+
+          <a href="#" class="start-grid-item" data-app="terminal">
+            <div class="start-grid-icon">
+              <i class="bi bi-terminal-fill"></i>
+            </div>
+            <span class="start-grid-label">Terminal</span>
+          </a>
+
+          <a href="#" class="start-grid-item" data-app="calculator">
+            <div class="start-grid-icon">
+              <i class="bi bi-calculator-fill"></i>
+            </div>
+            <span class="start-grid-label">Calculator</span>
+          </a>
+
+          <a href="#" class="start-grid-item" data-app="browser">
+            <div class="start-grid-icon">
+              <i class="bi bi-globe"></i>
+            </div>
+            <span class="start-grid-label">Edge</span>
+          </a>
+
+          <a href="#" class="start-grid-item" data-app="paint">
+            <div class="start-grid-icon">
+              <i class="bi bi-palette-fill"></i>
+            </div>
+            <span class="start-grid-label">Paint</span>
+          </a>
+
+          <a href="#" class="start-grid-item" data-app="notes">
+            <div class="start-grid-icon">
+              <i class="bi bi-sticky-fill"></i>
+            </div>
+            <span class="start-grid-label">Sticky Notes</span>
+          </a>
+
+        </div>
+      </div>
+
+      <!-- Recommended Section -->
+      <div class="start-recommended-section">
+        <div class="start-section-header">
+          <span class="start-section-title">Recommended</span>
+        </div>
+        
+        <div class="start-recommended-list">
+          
+          <div class="start-rec-item">
+            <div class="start-rec-icon">
+              <i class="bi bi-file-earmark-pdf-fill text-danger"></i>
+            </div>
+            <div class="start-rec-info">
+              <span class="start-rec-name">Welcome_Readme.txt</span>
+              <span class="start-rec-time">Added recently</span>
+            </div>
+          </div>
+
+          <div class="start-rec-item">
+            <div class="start-rec-icon">
+              <i class="bi bi-code-slash text-primary"></i>
+            </div>
+            <div class="start-rec-info">
+              <span class="start-rec-name">Portfolio_Source_Code</span>
+              <span class="start-rec-time">2 hours ago</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Footer Profile & Power Row -->
+      <div class="start-footer">
+        <div class="start-profile-area">
+          <div class="start-avatar">
+            <i class="bi bi-person-fill text-white"></i>
+          </div>
+          <div class="start-user-info">
+            <span class="start-user-name settings-user-display">DEV CHARLES WEB</span>
+            <span class="start-user-role">Administrator</span>
+          </div>
+        </div>
+        
+        <!-- Power Dropdown -->
+        <div class="dropdown">
+          <button class="btn start-power-btn" type="button" id="powerMenuButton" data-bs-toggle="dropdown" aria-expanded="false" title="Power">
+            <i class="bi bi-power"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end p-2 shadow-sm border-light" aria-labelledby="powerMenuButton">
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded" href="#" id="power-lock">
+                <i class="bi bi-shield-lock-fill text-primary"></i> Lock Screen
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded" href="#" id="power-restart">
+                <i class="bi bi-arrow-clockwise"></i> Restart
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item d-flex align-items-center gap-2 py-2 rounded text-danger" href="#" id="power-shutdown">
+                <i class="bi bi-power"></i> Shut Down
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ================================================================= -->
+    <!-- 4. APP WINDOWS (BOOTSTRAP MODALS)                                 -->
+    <!-- ================================================================= -->
+    
+    <!-- App Window: About Me -->
+    <div class="modal fade win11-modal" id="about-modal" tabindex="-1" aria-labelledby="aboutModalLabel" aria-hidden="true" data-bs-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content win11-window">
+          
+          <!-- Windows 11 Titlebar -->
+          <div class="win11-titlebar">
+            <div class="win11-title">
+              <i class="bi bi-person-circle text-primary"></i>
+              <span>About Me - Personal Profile</span>
+            </div>
+            <div class="win11-controls">
+              <button type="button" class="win11-control-btn" data-bs-dismiss="modal" aria-label="Minimize" title="Minimize">
+                <i class="bi bi-dash-lg"></i>
+              </button>
+              <button type="button" class="win11-control-btn d-none d-sm-flex" aria-label="Maximize" title="Maximize">
+                <i class="bi bi-square"></i>
+              </button>
+              <button type="button" class="win11-control-btn close-btn" data-bs-dismiss="modal" aria-label="Close" title="Close">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Windows 11 App Body -->
+          <div class="win11-body d-flex flex-column flex-md-row">
+            
+            <!-- App Sidebar (Left Navigation) -->
+            <div class="win11-navigation-sidebar col-md-3 d-none d-md-block">
+              <ul class="nav flex-column gap-1">
+                <li class="nav-item">
+                  <a class="nav-link active bg-white rounded shadow-sm py-2 px-3 text-primary d-flex align-items-center gap-2" href="#about-overview">
+                    <i class="bi bi-info-circle-fill"></i> Overview
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link py-2 px-3 text-dark d-flex align-items-center gap-2" href="#about-journey">
+                    <i class="bi bi-book-fill"></i> My Journey
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link py-2 px-3 text-dark d-flex align-items-center gap-2" href="#about-facts">
+                    <i class="bi bi-lightbulb-fill"></i> Fun Facts
+                  </a>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- App Content Area (Right Pane) -->
+            <div class="win11-content-pane col-md-9 w-100 flex-grow-1">
+              
+              <!-- Profile Overview Section -->
+              <div class="row align-items-center mb-4">
+                <div class="col-sm-4 text-center mb-3 mb-sm-0">
+                  <img src="/src/assets/images/developer_avatar_1783171875766.jpg" alt="Developer Profile" class="profile-avatar-img img-fluid" referrerPolicy="no-referrer">
+                </div>
+                <div class="col-sm-8 text-center text-sm-start">
+                  <span class="win11-badge mb-2"><i class="bi bi-mortarboard-fill"></i> DEV CHARLES WEB</span>
+                  <h2 class="h4 fw-bold mb-1">Hi, I'm a Passionate Developer</h2>
+                  <p class="text-muted mb-2">Building modern web solutions, inspired by visual OS interfaces.</p>
+                  <p class="small text-secondary mb-0">Location: London, UK | Status: Open to Learn & Collaborate</p>
+                </div>
+              </div>
+              
+              <hr class="opacity-10 my-3">
+              
+              <div id="about-overview">
+                <h3 class="h6 fw-bold text-dark uppercase mb-3 text-primary">Short Bio</h3>
+                <p class="small text-muted mb-3" style="line-height: 1.6;">
+                  I'm a first-year Information and Communications Technology (ICT) student who absolutely loves web development. My current toolset includes <strong>HTML5, CSS3, and Bootstrap 5</strong>. I enjoy creating beautiful, clean, responsive interfaces that make users smile. This portfolio is designed to mimic the beloved Windows 11 environment, showing off my skills as separate interactive apps!
+                </p>
+              </div>
+
+              <div id="about-journey" class="mt-4">
+                <h3 class="h6 fw-bold text-dark uppercase mb-3 text-primary">Technical Aspirations</h3>
+                <p class="small text-muted mb-3" style="line-height: 1.6;">
+                  While I'm starting out with frontend design fundamentals, my goal is to explore full-stack engineering, Cloud technologies, and interactive interface systems. I believe that learning to construct user experiences with care is the first step toward building world-class software.
+                </p>
+              </div>
+              
+              <div id="about-facts" class="mt-4">
+                <h3 class="h6 fw-bold text-dark uppercase mb-3 text-primary">Fun Facts</h3>
+                <div class="row g-2">
+                  <div class="col-6">
+                    <div class="win11-fact-box h-100">
+                      <div class="d-flex align-items-center gap-2 mb-1">
+                        <i class="bi bi-cup-hot text-danger"></i>
+                        <span class="small fw-semibold">Fuel Source</span>
+                      </div>
+                      <p class="x-small text-muted mb-0">Runs on hot cocoa and classical piano study playlists.</p>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="win11-fact-box h-100">
+                      <div class="d-flex align-items-center gap-2 mb-1">
+                        <i class="bi bi-controller text-success"></i>
+                        <span class="small fw-semibold">Retro Gamer</span>
+                      </div>
+                      <p class="x-small text-muted mb-0">Collects vintage game cartridges and retro OS skins.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- App Window: Projects -->
+    <div class="modal fade win11-modal" id="projects-modal" tabindex="-1" aria-labelledby="projectsModalLabel" aria-hidden="true" data-bs-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content win11-window">
+          
+          <!-- Windows 11 Titlebar -->
+          <div class="win11-titlebar">
+            <div class="win11-title">
+              <i class="bi bi-folder-fill text-warning"></i>
+              <span>File Explorer - Projects Showcase</span>
+            </div>
+            <div class="win11-controls">
+              <button type="button" class="win11-control-btn" data-bs-dismiss="modal" aria-label="Minimize" title="Minimize">
+                <i class="bi bi-dash-lg"></i>
+              </button>
+              <button type="button" class="win11-control-btn d-none d-sm-flex" aria-label="Maximize" title="Maximize">
+                <i class="bi bi-square"></i>
+              </button>
+              <button type="button" class="win11-control-btn close-btn" data-bs-dismiss="modal" aria-label="Close" title="Close">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Windows 11 App Body -->
+          <div class="win11-body d-flex flex-column flex-md-row">
+            
+            <!-- App Sidebar (Left Navigation) -->
+            <div class="win11-navigation-sidebar col-md-3 d-none d-md-block">
+              <ul class="nav flex-column gap-1">
+                <li class="nav-item">
+                  <a class="nav-link active bg-white rounded shadow-sm py-2 px-3 text-primary d-flex align-items-center gap-2" href="#projects-all">
+                    <i class="bi bi-hdd-network-fill text-primary"></i> Quick Access
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link py-2 px-3 text-dark d-flex align-items-center gap-2" href="#projects-active">
+                    <i class="bi bi-star-fill text-warning"></i> Favorites
+                  </a>
+                </li>
+              </ul>
+            </div>
+            
+            <!-- App Content Area (Right Pane) -->
+            <div class="win11-content-pane col-md-9 w-100 flex-grow-1">
+              
+              <!-- Page Header -->
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <div>
+                  <span class="text-secondary small">This PC > Projects</span>
+                  <h2 class="h4 fw-bold mb-0">My Applications & Projects</h2>
+                </div>
+                <span class="badge bg-light text-dark border p-2 d-none d-sm-inline-block">3 items shown</span>
+              </div>
+              
+              <div class="row row-cols-1 row-cols-md-2 g-4" id="projects-list-container">
+                
+                <!-- PROJECT CARD 1 START -->
+                <div class="col">
+                  <div class="card h-100 border-light shadow-sm">
+                    <!-- Project Screenshot -->
+                    <img src="/src/assets/images/project_dashboard_1783172997327.jpg" class="card-img-top border-bottom" alt="Finance Dashboard Preview" style="height: 140px; object-fit: cover;" referrerPolicy="no-referrer">
+                    
+                    <div class="card-body d-flex flex-column p-3">
+                      <!-- Project Title -->
+                      <h5 class="card-title h6 fw-bold mb-1">Financial Analysis Dashboard</h5>
+                      
+                      <!-- Project Description -->
+                      <p class="card-text text-muted mb-3" style="font-size: 11.5px; line-height: 1.4;">
+                        A responsive administrative analytics control center featuring interactive metrics, real-time tracking, and simple mock charts.
+                      </p>
+                      
+                      <!-- Tech Stack Badges (Using Bootstrap pill badges) -->
+                      <div class="mb-3 d-flex flex-wrap gap-1 mt-auto">
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill" style="font-size: 9px; font-weight: 500;">HTML5</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill" style="font-size: 9px; font-weight: 500;">CSS3</span>
+                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill" style="font-size: 9px; font-weight: 500;">Bootstrap 5</span>
+                      </div>
+                      
+                      <!-- Interactive Buttons -->
+                      <div class="d-flex gap-2">
+                        <a href="https://example.com" target="_blank" class="btn btn-primary btn-sm flex-grow-1 py-1.5 d-flex align-items-center justify-content-center gap-1" style="font-size: 11px;">
+                          <i class="bi bi-globe"></i> Live Demo
+                        </a>
+                        <a href="https://github.com" target="_blank" class="btn btn-outline-secondary btn-sm py-1.5 d-flex align-items-center justify-content-center" style="font-size: 11px; width: 40px;" title="View Source Code">
+                          <i class="bi bi-github"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- PROJECT CARD 1 END -->
+
+                <!-- PROJECT CARD 2 START -->
+                <div class="col">
+                  <div class="card h-100 border-light shadow-sm">
+                    <!-- Project Screenshot -->
+                    <img src="/src/assets/images/project_recipes_1783173011418.jpg" class="card-img-top border-bottom" alt="Recipe Hub Preview" style="height: 140px; object-fit: cover;" referrerPolicy="no-referrer">
+                    
+                    <div class="card-body d-flex flex-column p-3">
+                      <!-- Project Title -->
+                      <h5 class="card-title h6 fw-bold mb-1">Recipe Vault App</h5>
+                      
+                      <!-- Project Description -->
+                      <p class="card-text text-muted mb-3" style="font-size: 11.5px; line-height: 1.4;">
+                        An intuitive cooking companion website that showcases tasty food cards, detailed preparation steps, and easy navigation widgets.
+                      </p>
+                      
+                      <!-- Tech Stack Badges (Using Bootstrap pill badges) -->
+                      <div class="mb-3 d-flex flex-wrap gap-1 mt-auto">
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill" style="font-size: 9px; font-weight: 500;">HTML5</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill" style="font-size: 9px; font-weight: 500;">CSS3</span>
+                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill" style="font-size: 9px; font-weight: 500;">Bootstrap 5</span>
+                      </div>
+                      
+                      <!-- Interactive Buttons -->
+                      <div class="d-flex gap-2">
+                        <a href="https://example.com" target="_blank" class="btn btn-primary btn-sm flex-grow-1 py-1.5 d-flex align-items-center justify-content-center gap-1" style="font-size: 11px;">
+                          <i class="bi bi-globe"></i> Live Demo
+                        </a>
+                        <a href="https://github.com" target="_blank" class="btn btn-outline-secondary btn-sm py-1.5 d-flex align-items-center justify-content-center" style="font-size: 11px; width: 40px;" title="View Source Code">
+                          <i class="bi bi-github"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- PROJECT CARD 2 END -->
+
+                <!-- PROJECT CARD 3 START -->
+                <div class="col">
+                  <div class="card h-100 border-light shadow-sm">
+                    <!-- Project Screenshot -->
+                    <img src="/src/assets/images/project_paint_1783173024300.jpg" class="card-img-top border-bottom" alt="Paint Canvas Preview" style="height: 140px; object-fit: cover;" referrerPolicy="no-referrer">
+                    
+                    <div class="card-body d-flex flex-column p-3">
+                      <!-- Project Title -->
+                      <h5 class="card-title h6 fw-bold mb-1">Creative Paint Tool</h5>
+                      
+                      <!-- Project Description -->
+                      <p class="card-text text-muted mb-3" style="font-size: 11.5px; line-height: 1.4;">
+                        A fully interactive pixel coloring canvas application allowing creative designers to paint, clear grids, and swap colors easily.
+                      </p>
+                      
+                      <!-- Tech Stack Badges (Using Bootstrap pill badges) -->
+                      <div class="mb-3 d-flex flex-wrap gap-1 mt-auto">
+                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill" style="font-size: 9px; font-weight: 500;">HTML5</span>
+                        <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill" style="font-size: 9px; font-weight: 500;">CSS3</span>
+                        <span class="badge bg-warning-subtle text-warning border border-warning-subtle rounded-pill" style="font-size: 9px; font-weight: 500;">Bootstrap 5</span>
+                      </div>
+                      
+                      <!-- Interactive Buttons -->
+                      <div class="d-flex gap-2">
+                        <a href="https://example.com" target="_blank" class="btn btn-primary btn-sm flex-grow-1 py-1.5 d-flex align-items-center justify-content-center gap-1" style="font-size: 11px;">
+                          <i class="bi bi-globe"></i> Live Demo
+                        </a>
+                        <a href="https://github.com" target="_blank" class="btn btn-outline-secondary btn-sm py-1.5 d-flex align-items-center justify-content-center" style="font-size: 11px; width: 40px;" title="View Source Code">
+                          <i class="bi bi-github"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- PROJECT CARD 3 END -->
+
+              </div>
+
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+    <!-- App Window: Settings -->
+    <div class="modal fade win11-modal" id="skills-modal" tabindex="-1" aria-labelledby="skillsModalLabel" aria-hidden="true" data-bs-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content win11-window">
+          
+          <!-- Windows 11 Titlebar -->
+          <div class="win11-titlebar">
+            <div class="win11-title">
+              <i class="bi bi-gear-fill text-secondary"></i>
+              <span>Settings</span>
+            </div>
+            <div class="win11-controls">
+              <button type="button" class="win11-control-btn" data-bs-dismiss="modal" aria-label="Minimize" title="Minimize">
+                <i class="bi bi-dash-lg"></i>
+              </button>
+              <button type="button" class="win11-control-btn d-none d-sm-flex" aria-label="Maximize" title="Maximize">
+                <i class="bi bi-square"></i>
+              </button>
+              <button type="button" class="win11-control-btn close-btn" data-bs-dismiss="modal" aria-label="Close" title="Close">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Windows 11 App Body -->
+          <div class="win11-body">
+            
+            <!-- Mobile Category Pinned Selector (visible only on small screens) -->
+            <div class="d-md-none p-2 border-bottom bg-light">
+              <div class="nav nav-pills d-flex flex-nowrap gap-1" id="settings-pills-mobile" role="tablist" style="overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 4px;">
+                <button class="nav-link active py-1.5 px-2.5 text-center border-0 small flex-shrink-0" id="v-pills-system-tab-m" data-bs-toggle="pill" data-bs-target="#v-pills-system" type="button" role="tab" aria-controls="v-pills-system" aria-selected="true" style="font-size: 11px; border-radius: 6px;">
+                  <i class="bi bi-laptop me-1"></i> System
+                </button>
+                <button class="nav-link py-1.5 px-2.5 text-center border-0 small flex-shrink-0" id="v-pills-personalization-tab-m" data-bs-toggle="pill" data-bs-target="#v-pills-personalization" type="button" role="tab" aria-controls="v-pills-personalization" aria-selected="false" style="font-size: 11px; border-radius: 6px;">
+                  <i class="bi bi-palette me-1"></i> Personalization
+                </button>
+                <button class="nav-link py-1.5 px-2.5 text-center border-0 small flex-shrink-0" id="v-pills-network-tab-m" data-bs-toggle="pill" data-bs-target="#v-pills-network" type="button" role="tab" aria-controls="v-pills-network" aria-selected="false" style="font-size: 11px; border-radius: 6px;">
+                  <i class="bi bi-wifi me-1"></i> Network
+                </button>
+                <button class="nav-link py-1.5 px-2.5 text-center border-0 small flex-shrink-0" id="v-pills-skills-tab-m" data-bs-toggle="pill" data-bs-target="#v-pills-skills" type="button" role="tab" aria-controls="v-pills-skills" aria-selected="false" style="font-size: 11px; border-radius: 6px;">
+                  <i class="bi bi-code-square me-1"></i> Skills
+                </button>
+                <button class="nav-link py-1.5 px-2.5 text-center border-0 small flex-shrink-0" id="v-pills-accounts-tab-m" data-bs-toggle="pill" data-bs-target="#v-pills-accounts" type="button" role="tab" aria-controls="v-pills-accounts" aria-selected="false" style="font-size: 11px; border-radius: 6px;">
+                  <i class="bi bi-person-circle me-1"></i> Accounts
+                </button>
+                <button class="nav-link py-1.5 px-2.5 text-center border-0 small flex-shrink-0" id="v-pills-update-tab-m" data-bs-toggle="pill" data-bs-target="#v-pills-update" type="button" role="tab" aria-controls="v-pills-update" aria-selected="false" style="font-size: 11px; border-radius: 6px;">
+                  <i class="bi bi-arrow-clockwise me-1"></i> Windows Update
+                </button>
+              </div>
+            </div>
+
+            <div class="row g-0 h-100">
+              
+              <!-- Desktop Navigation Sidebar -->
+              <div class="col-md-3 win11-navigation-sidebar d-none d-md-block" style="overflow-y: auto;">
+                <div class="nav flex-column nav-pills" id="settings-pills" role="tablist" aria-orientation="vertical">
+                  <button class="nav-link active text-start py-2.5 px-3 rounded-2 mb-1 border-0" id="v-pills-system-tab" data-bs-toggle="pill" data-bs-target="#v-pills-system" type="button" role="tab" aria-controls="v-pills-system" aria-selected="true">
+                    <i class="bi bi-laptop me-2 text-primary"></i> System
+                  </button>
+                  <button class="nav-link text-start py-2.5 px-3 rounded-2 mb-1 border-0" id="v-pills-personalization-tab" data-bs-toggle="pill" data-bs-target="#v-pills-personalization" type="button" role="tab" aria-controls="v-pills-personalization" aria-selected="false">
+                    <i class="bi bi-palette me-2 text-success"></i> Personalization
+                  </button>
+                  <button class="nav-link text-start py-2.5 px-3 rounded-2 mb-1 border-0" id="v-pills-network-tab" data-bs-toggle="pill" data-bs-target="#v-pills-network" type="button" role="tab" aria-controls="v-pills-network" aria-selected="false">
+                    <i class="bi bi-wifi me-2 text-info"></i> Network & Internet
+                  </button>
+                  <button class="nav-link text-start py-2.5 px-3 rounded-2 mb-1 border-0" id="v-pills-skills-tab" data-bs-toggle="pill" data-bs-target="#v-pills-skills" type="button" role="tab" aria-controls="v-pills-skills" aria-selected="false">
+                    <i class="bi bi-code-square me-2 text-warning"></i> Skills & Expertise
+                  </button>
+                  <button class="nav-link text-start py-2.5 px-3 rounded-2 mb-1 border-0" id="v-pills-accounts-tab" data-bs-toggle="pill" data-bs-target="#v-pills-accounts" type="button" role="tab" aria-controls="v-pills-accounts" aria-selected="false">
+                    <i class="bi bi-person-circle me-2 text-danger"></i> Accounts
+                  </button>
+                  <button class="nav-link text-start py-2.5 px-3 rounded-2 mb-1 border-0" id="v-pills-update-tab" data-bs-toggle="pill" data-bs-target="#v-pills-update" type="button" role="tab" aria-controls="v-pills-update" aria-selected="false">
+                    <i class="bi bi-arrow-clockwise me-2 text-info"></i> Windows Update
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Content Pane -->
+              <div class="col-12 col-md-9" style="overflow-y: auto; height: 100%;">
+                <div class="tab-content win11-content-pane p-4" id="settings-tabContent" style="height: 100%;">
+                  
+                  <!-- Tab Panel: System -->
+                  <div class="tab-pane fade show active" id="v-pills-system" role="tabpanel" aria-labelledby="v-pills-system-tab">
+                    <div class="mb-4">
+                      <h2 class="h5 fw-bold text-dark mb-1">System Info & Properties</h2>
+                      <p class="small text-muted">View system properties, customize your user profile identity, and manage energy settings.</p>
+                    </div>
+
+                    <!-- Rename Owner Identity -->
+                    <div class="mb-4 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <label class="form-label small fw-semibold text-dark mb-1">System Owner Identity</label>
+                      <div class="input-group">
+                        <input type="text" class="form-control form-control-sm" id="settings-name-input" value="DEV CHARLES WEB" placeholder="Enter owner name" style="font-size: 11.5px;">
+                        <button class="btn btn-sm btn-primary" id="settings-name-save" style="font-size: 11.5px; background-color: var(--win-blue); border: none;">Rename</button>
+                      </div>
+                      <p class="x-small text-muted mt-2 mb-0">Updates your display identity globally (Lock Screen, Start Menu, Toast Alerts, and System profile).</p>
+                    </div>
+
+                    <!-- Device Specifications -->
+                    <div class="bg-white p-3 rounded-3 border border-light-subtle shadow-sm mb-4">
+                      <h3 class="small fw-semibold text-dark mb-2">Device Specifications</h3>
+                      <table class="table table-borderless table-sm mb-0 x-small text-muted" style="font-size: 11px;">
+                        <tbody>
+                          <tr><td class="fw-semibold ps-0 text-dark" style="width: 30%;">Device name</td><td id="settings-pc-name">DEV-CHARLES-PC</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">Processor</td><td>Intel Core i9-13900K @ 5.40GHz</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">Installed RAM</td><td>32.0 GB (31.8 GB usable)</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">System type</td><td>64-bit operating system, x64-based processor</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">Power / Battery</td><td id="settings-battery-spec">Plugged in (Charging)</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+
+                    <!-- Windows Specifications -->
+                    <div class="bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <h3 class="small fw-semibold text-dark mb-2">Windows Specifications</h3>
+                      <table class="table table-borderless table-sm mb-0 x-small text-muted" style="font-size: 11px;">
+                        <tbody>
+                          <tr><td class="fw-semibold ps-0 text-dark" style="width: 30%;">Edition</td><td>Windows 11 Pro Portfolio Edition</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">Version</td><td>26H2</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">OS build</td><td>22621.1702</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">Experience</td><td>Windows Feature Experience Pack 1000.22621.1000.0</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- Tab Panel: Personalization -->
+                  <div class="tab-pane fade" id="v-pills-personalization" role="tabpanel" aria-labelledby="v-pills-personalization-tab">
+                    <div class="mb-4">
+                      <h2 class="h5 fw-bold text-dark mb-1">Personalization Settings</h2>
+                      <p class="small text-muted">Customize your desktop canvas with elegant themes, background styles, and taskbar alignments.</p>
+                    </div>
+
+                    <!-- Mode Select -->
+                    <div class="mb-4 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <h3 class="small fw-semibold text-dark mb-2">Choose your mode</h3>
+                      <div class="d-flex gap-2">
+                        <button class="btn btn-sm btn-outline-secondary flex-grow-1" id="settings-theme-light" style="font-size: 11.5px; border-radius: 6px;"><i class="bi bi-brightness-high me-1"></i>Light Mode</button>
+                        <button class="btn btn-sm btn-outline-secondary flex-grow-1" id="settings-theme-dark" style="font-size: 11.5px; border-radius: 6px;"><i class="bi bi-moon-stars me-1"></i>Dark Mode</button>
+                      </div>
+                    </div>
+
+                    <!-- Choose Background Grid -->
+                    <div class="mb-4 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <h3 class="small fw-semibold text-dark mb-2">Choose your desktop background</h3>
+                      <div class="row g-2">
+                        <!-- Option 1: Bloom Light -->
+                        <div class="col-6 col-sm-3">
+                          <div class="wallpaper-thumb rounded border p-1" id="wp-bloom-light" style="cursor: pointer; height: 60px; background: linear-gradient(135deg, #f3f4f6 0%, #e0e7ff 100%);" title="Windows Bloom Light">
+                            <div class="w-100 h-100 rounded" style="background: radial-gradient(circle at 80% 20%, rgba(212, 233, 255, 0.8) 0%, transparent 45%), radial-gradient(circle at 20% 80%, rgba(245, 220, 245, 0.8) 0%, transparent 55%), radial-gradient(circle at 50% 50%, rgba(220, 240, 255, 0.7) 0%, transparent 70%), linear-gradient(135deg, #f3f4f6 0%, #e0e7ff 100%);"></div>
+                          </div>
+                          <div class="text-center x-small mt-1 text-muted" style="font-size: 10px;">Bloom Light</div>
+                        </div>
+                        <!-- Option 2: Bloom Dark -->
+                        <div class="col-6 col-sm-3">
+                          <div class="wallpaper-thumb rounded border p-1" id="wp-bloom-dark" style="cursor: pointer; height: 60px; background: #0b0f19;" title="Windows Bloom Dark">
+                            <div class="w-100 h-100 rounded" style="background: radial-gradient(circle at 80% 20%, rgba(20, 40, 80, 0.9) 0%, transparent 45%), radial-gradient(circle at 20% 80%, rgba(50, 20, 50, 0.9) 0%, transparent 55%), radial-gradient(circle at 50% 50%, rgba(10, 20, 40, 0.8) 0%, transparent 70%), linear-gradient(135deg, #0b0f19 0%, #1e1b4b 100%);"></div>
+                          </div>
+                          <div class="text-center x-small mt-1 text-muted" style="font-size: 10px;">Bloom Dark</div>
+                        </div>
+                        <!-- Option 3: Sunset Glow -->
+                        <div class="col-6 col-sm-3">
+                          <div class="wallpaper-thumb rounded border p-1" id="wp-sunset" style="cursor: pointer; height: 60px; background: #2e1065;" title="Sunset Glow">
+                            <div class="w-100 h-100 rounded" style="background: radial-gradient(circle at 80% 20%, rgba(255, 100, 100, 0.8) 0%, transparent 45%), radial-gradient(circle at 20% 80%, rgba(150, 50, 150, 0.7) 0%, transparent 55%), linear-gradient(135deg, #2e1065 0%, #0c041e 100%);"></div>
+                          </div>
+                          <div class="text-center x-small mt-1 text-muted" style="font-size: 10px;">Sunset Glow</div>
+                        </div>
+                        <!-- Option 4: Emerald Aurora -->
+                        <div class="col-6 col-sm-3">
+                          <div class="wallpaper-thumb rounded border p-1" id="wp-emerald" style="cursor: pointer; height: 60px; background: #05190b;" title="Emerald Aurora">
+                            <div class="w-100 h-100 rounded" style="background: radial-gradient(circle at 80% 20%, rgba(52, 211, 153, 0.7) 0%, transparent 50%), radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.5) 0%, transparent 50%), linear-gradient(135deg, #05190b 0%, #064e3b 100%);"></div>
+                          </div>
+                          <div class="text-center x-small mt-1 text-muted" style="font-size: 10px;">Emerald Aurora</div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Taskbar Alignment -->
+                    <div class="bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <h3 class="small fw-semibold text-dark mb-2">Taskbar Alignment behaviors</h3>
+                      <div class="d-flex align-items-center justify-content-between">
+                        <span class="small text-muted">Taskbar alignment positioning</span>
+                        <select class="form-select form-select-sm w-auto" id="settings-taskbar-align" style="font-size: 11.5px; border-radius: 6px;">
+                          <option value="center" selected>Center</option>
+                          <option value="left">Left</option>
+                        </select>
+                      </div>
+                      <p class="x-small text-muted mt-2 mb-0">Switch taskbar layout from traditional Windows 10 style (Left) to modern Windows 11 style (Center).</p>
+                    </div>
+                  </div>
+
+                  <!-- Tab Panel: Network & Internet -->
+                  <div class="tab-pane fade" id="v-pills-network" role="tabpanel" aria-labelledby="v-pills-network-tab">
+                    <div class="mb-4">
+                      <h2 class="h5 fw-bold text-dark mb-1">Network & Internet</h2>
+                      <p class="small text-muted">Check your network link properties, toggle wireless connections, and simulate airplane mode.</p>
+                    </div>
+
+                    <!-- Wi-Fi Toggle -->
+                    <div class="mb-4 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small fw-semibold text-dark"><i class="bi bi-wifi me-2 text-primary"></i>Wi-Fi Connection Adapter</span>
+                        <div class="form-check form-switch m-0">
+                          <input class="form-check-input" type="checkbox" role="switch" id="settings-wifi-toggle" checked>
+                        </div>
+                      </div>
+                      <div class="x-small text-muted mt-1" id="settings-wifi-status">Connected to DEV-WIFI-6E (Secure, Internet Access)</div>
+                    </div>
+
+                    <!-- Airplane Mode -->
+                    <div class="mb-4 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <span class="small fw-semibold text-dark"><i class="bi bi-airplane me-2 text-info"></i>Airplane Mode Switch</span>
+                        <div class="form-check form-switch m-0">
+                          <input class="form-check-input" type="checkbox" role="switch" id="settings-airplane-toggle">
+                        </div>
+                      </div>
+                      <p class="x-small text-muted mt-1 mb-0">Instantly disconnect all active Wi-Fi and Bluetooth peripherals to run offline.</p>
+                    </div>
+
+                    <!-- Connection Properties -->
+                    <div class="bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <h3 class="small fw-semibold text-dark mb-2">Active Link Properties</h3>
+                      <table class="table table-borderless table-sm mb-0 x-small text-muted" style="font-size: 11px;">
+                        <tbody>
+                          <tr><td class="fw-semibold ps-0 text-dark" style="width: 35%;">IPv4 Address</td><td id="settings-ipv4-addr">192.168.1.134</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">Link transmission speed</td><td>1201 / 1201 (Mbps)</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">Network band frequency</td><td>5 GHz WiFi-6</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">Manufacturer</td><td>Intel Corporation</td></tr>
+                          <tr><td class="fw-semibold ps-0 text-dark">MAC Physical address</td><td>74-D4-35-9A-BC-D8</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+
+                  <!-- Tab Panel: Skills & Expertise (Interactive Sub-pills) -->
+                  <div class="tab-pane fade" id="v-pills-skills" role="tabpanel" aria-labelledby="v-pills-skills-tab">
+                    <div class="mb-3">
+                      <h2 class="h5 fw-bold text-dark mb-1">Developer Skills & Core Stack</h2>
+                      <p class="small text-muted">A specialized system-view breakdown of core scripting languages, frameworks, and tools.</p>
+                    </div>
+
+                    <!-- Nested sub-tab pills -->
+                    <div class="mb-3 border-bottom pb-2">
+                      <div class="nav nav-pills d-flex gap-1" id="skills-subpills" role="tablist">
+                        <button class="nav-link active py-1.5 px-3 border-0 small" style="font-size: 11px; border-radius: 6px;" id="sub-languages-tab" data-bs-toggle="pill" data-bs-target="#sub-languages" type="button" role="tab" aria-selected="true">
+                          <i class="bi bi-code-square me-1"></i> Languages
+                        </button>
+                        <button class="nav-link py-1.5 px-3 border-0 small" style="font-size: 11px; border-radius: 6px;" id="sub-frameworks-tab" data-bs-toggle="pill" data-bs-target="#sub-frameworks" type="button" role="tab" aria-selected="false">
+                          <i class="bi bi-cpu me-1"></i> Frameworks
+                        </button>
+                        <button class="nav-link py-1.5 px-3 border-0 small" style="font-size: 11px; border-radius: 6px;" id="sub-tools-tab" data-bs-toggle="pill" data-bs-target="#sub-tools" type="button" role="tab" aria-selected="false">
+                          <i class="bi bi-wrench-adjustable me-1"></i> Tools & Tech
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Nested sub-tab panels -->
+                    <div class="tab-content" id="skills-subContent" style="max-height: 290px; overflow-y: auto; padding-right: 4px;">
+                      
+                      <!-- Sub Panel: Languages -->
+                      <div class="tab-pane fade show active" id="sub-languages" role="tabpanel">
+                        <!-- HTML5 -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-filetype-html me-2 text-danger"></i>HTML5</span>
+                            <span class="x-small text-muted fw-medium">95% (Advanced)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 95%;" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Semantic elements, web accessibility (ARIA), responsive document structure, SEO best practices.</p>
+                        </div>
+
+                        <!-- CSS3 -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-filetype-css me-2 text-primary"></i>CSS3</span>
+                            <span class="x-small text-muted fw-medium">90% (Advanced)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Flexbox & CSS Grid, fluid layouts, keyframe animations, custom properties (variables), media queries.</p>
+                        </div>
+
+                        <!-- JavaScript -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-filetype-js me-2 text-warning"></i>JavaScript (ES6+)</span>
+                            <span class="x-small text-muted fw-medium">80% (Intermediate)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Asynchronous programming (Promises, Async/Await), DOM manipulation, JSON integration, event propagation.</p>
+                        </div>
+
+                        <!-- TypeScript -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-shield-fill-check me-2 text-info"></i>TypeScript</span>
+                            <span class="x-small text-muted fw-medium">75% (Intermediate)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Static typing, explicit interfaces, custom types and generics, editor-guided self-documentation.</p>
+                        </div>
+
+                        <!-- Python -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-filetype-py me-2 text-dark"></i>Python</span>
+                            <span class="x-small text-muted fw-medium">60% (Basic/Intermediate)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-dark" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Algorithm structure, basic automation scripts, data handling and manipulation, syntax fundamentals.</p>
+                        </div>
+                      </div>
+
+                      <!-- Sub Panel: Frameworks -->
+                      <div class="tab-pane fade" id="sub-frameworks" role="tabpanel">
+                        <!-- Bootstrap 5 -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-bootstrap-fill me-2" style="color: #563d7c;"></i>Bootstrap 5</span>
+                            <span class="x-small text-muted fw-medium">90% (Advanced)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar" role="progressbar" style="width: 90%; background-color: #563d7c;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Responsive grids, customized components, Utility classes, Modal wrappers, custom Sass parameters.</p>
+                        </div>
+
+                        <!-- Tailwind CSS -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-wind me-2 text-info"></i>Tailwind CSS</span>
+                            <span class="x-small text-muted fw-medium">80% (Intermediate)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Utility-first workflow, responsive overrides, arbitrary configurations, grid bento alignments.</p>
+                        </div>
+
+                        <!-- React -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-brightness-high-fill me-2 text-primary"></i>React (Vite)</span>
+                            <span class="x-small text-muted fw-medium">75% (Intermediate)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 75%;" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Functional components, React Hooks (useState, useEffect, useRef), context state management, rendering loops.</p>
+                        </div>
+
+                        <!-- Node.js & Express -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-hdd-network-fill me-2 text-success"></i>Node.js & Express</span>
+                            <span class="x-small text-muted fw-medium">60% (Basic/Intermediate)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Simple routing, HTTP request handling, REST API design, Express middleware configuration, package scripts.</p>
+                        </div>
+                      </div>
+
+                      <!-- Sub Panel: Tools & Tech -->
+                      <div class="tab-pane fade" id="sub-tools" role="tabpanel">
+                        <!-- Git & GitHub -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-git me-2 text-danger"></i>Git & GitHub</span>
+                            <span class="x-small text-muted fw-medium">85% (Advanced)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-danger" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Branch management, merge requests/PRs, version history checkpoints, tag releases, secure repository keys.</p>
+                        </div>
+
+                        <!-- VS Code -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-terminal-fill me-2 text-primary"></i>VS Code & Command Line</span>
+                            <span class="x-small text-muted fw-medium">90% (Advanced)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Custom keybind configurations, extension ecosystems (linters, formatters), native terminal orchestration.</p>
+                        </div>
+
+                        <!-- Vite & npm -->
+                        <div class="mb-3 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                          <div class="d-flex justify-content-between align-items-center mb-1">
+                            <span class="small fw-semibold text-dark"><i class="bi bi-box-seam me-2 text-warning"></i>Vite, npm, & package.json</span>
+                            <span class="x-small text-muted fw-medium">80% (Intermediate)</span>
+                          </div>
+                          <div class="progress" style="height: 6px; background-color: #f1f5f9;">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 80%;" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+                          </div>
+                          <p class="x-small text-muted mt-2 mb-0">Bundler compilation flow, script definitions, dependencies lock audit, static hosting build configurations.</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+
+                  <!-- Tab Panel: Accounts -->
+                  <div class="tab-pane fade" id="v-pills-accounts" role="tabpanel" aria-labelledby="v-pills-accounts-tab">
+                    <div class="mb-4">
+                      <h2 class="h5 fw-bold text-dark mb-1">Accounts & Sign-in Options</h2>
+                      <p class="small text-muted">Manage system authentication, lock properties, and password/PIN profiles.</p>
+                    </div>
+
+                    <!-- User Account Card -->
+                    <div class="mb-4 bg-white p-3 rounded-3 border border-light-subtle shadow-sm d-flex gap-3 align-items-center">
+                      <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center shadow-sm" style="width: 50px; height: 50px; font-size: 20px;">
+                        <i class="bi bi-person-fill"></i>
+                      </div>
+                      <div class="min-width-0 flex-grow-1">
+                        <h3 class="h6 fw-bold text-dark mb-0 settings-user-display text-truncate">DEV CHARLES WEB</h3>
+                        <span class="x-small text-muted d-block text-truncate">Local Account | Administrator</span>
+                        <span class="x-small text-muted text-truncate" id="settings-email-display">adeosuncharles15@gmail.com</span>
+                      </div>
+                    </div>
+
+                    <!-- PIN Update -->
+                    <div class="bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <h3 class="small fw-semibold text-dark mb-2"><i class="bi bi-shield-lock me-2 text-danger"></i>Change Lock Screen PIN</h3>
+                      <p class="x-small text-muted mb-3">Set a new 4-digit numeric PIN to protect your lock screen access. Default is 1234.</p>
+                      
+                      <div class="row g-2">
+                        <div class="col-sm-6">
+                          <input type="password" class="form-control form-control-sm" id="settings-pin-new" placeholder="New 4-digit PIN" maxlength="4" style="font-size: 11.5px; border-radius: 6px;">
+                        </div>
+                        <div class="col-sm-6">
+                          <button class="btn btn-sm btn-primary w-100" id="settings-pin-save" style="font-size: 11.5px; background-color: var(--win-blue); border: none; border-radius: 6px; height: 31px;">Update PIN</button>
+                        </div>
+                      </div>
+                      <div id="settings-pin-status" class="x-small mt-2"></div>
+                    </div>
+                  </div>
+
+                  <!-- Tab Panel: Windows Update -->
+                  <div class="tab-pane fade" id="v-pills-update" role="tabpanel" aria-labelledby="v-pills-update-tab">
+                    <div class="mb-4">
+                      <h2 class="h5 fw-bold text-dark mb-1">Windows Update</h2>
+                      <p class="small text-muted">Keep your developer sandbox up to date with the latest features, improvements, and vulnerability patches.</p>
+                    </div>
+
+                    <!-- Update State -->
+                    <div class="mb-4 bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div>
+                          <h3 class="small fw-semibold text-dark mb-0">Update Status</h3>
+                          <span class="x-small text-muted" id="settings-update-status">Last checked: Today, 1:45 AM</span>
+                        </div>
+                        <button class="btn btn-sm btn-primary" id="settings-update-check-btn" style="font-size: 11.5px; background-color: var(--win-blue); border: none; border-radius: 6px;">Check for updates</button>
+                      </div>
+                      
+                      <!-- Update Dynamic Progress Bar -->
+                      <div class="progress d-none mb-2" id="settings-update-progress" style="height: 6px; background-color: #f1f5f9;">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%;" id="settings-update-progress-inner"></div>
+                      </div>
+                      <div class="x-small text-success fw-medium" id="settings-update-alert">
+                        <i class="bi bi-check-circle-fill me-1"></i>You're up to date
+                      </div>
+                    </div>
+
+                    <!-- Installation log -->
+                    <div class="bg-white p-3 rounded-3 border border-light-subtle shadow-sm">
+                      <h3 class="small fw-semibold text-dark mb-2">Update History Logs</h3>
+                      <ul class="list-unstyled mb-0 x-small text-muted" style="font-size: 11px;">
+                        <li class="pb-2 mb-2 border-bottom">
+                          <span class="fw-semibold text-dark d-block">Security Intelligence Update for Microsoft Defender Antivirus - KB2267602</span> 
+                          <span class="text-secondary" style="font-size: 10px;">Successfully installed on 08/07/2026</span>
+                        </li>
+                        <li class="pb-2 mb-2 border-bottom">
+                          <span class="fw-semibold text-dark d-block">2026-06 Cumulative Update for Windows 11 Version 22H2 for x64-based Systems - KB5027231</span> 
+                          <span class="text-secondary" style="font-size: 10px;">Successfully installed on 15/06/2026</span>
+                        </li>
+                        <li>
+                          <span class="fw-semibold text-dark d-block">Windows Malicious Software Removal Tool x64 - v5.114</span> 
+                          <span class="text-secondary" style="font-size: 10px;">Successfully installed on 10/06/2026</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+    <!-- App Window: Resume / CV Viewer -->
+    <div class="modal fade win11-modal" id="resume-modal" tabindex="-1" aria-labelledby="resumeModalLabel" aria-hidden="true" data-bs-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content win11-window">
+          
+          <!-- Windows 11 Titlebar -->
+          <div class="win11-titlebar">
+            <div class="win11-title">
+              <i class="bi bi-file-earmark-pdf-fill text-danger"></i>
+              <span>Edge - Resume.pdf</span>
+            </div>
+            <div class="win11-controls">
+              <button type="button" class="win11-control-btn" data-bs-dismiss="modal" aria-label="Minimize" title="Minimize">
+                <i class="bi bi-dash-lg"></i>
+              </button>
+              <button type="button" class="win11-control-btn d-none d-sm-flex" aria-label="Maximize" title="Maximize">
+                <i class="bi bi-square"></i>
+              </button>
+              <button type="button" class="win11-control-btn close-btn" data-bs-dismiss="modal" aria-label="Close" title="Close">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Windows 11 App Body -->
+          <div class="win11-body">
+            
+            <!-- Edge PDF Document Toolbar -->
+            <div class="d-flex align-items-center justify-content-between px-3 py-2 bg-light border-bottom border-light-subtle">
+              <div class="d-flex align-items-center gap-2">
+                <button class="btn btn-sm btn-outline-secondary border-0 d-flex align-items-center justify-content-center p-1" disabled><i class="bi bi-chevron-left"></i></button>
+                <span class="small text-muted" style="font-size: 11.5px;">Page 1 / 1</span>
+                <button class="btn btn-sm btn-outline-secondary border-0 d-flex align-items-center justify-content-center p-1" disabled><i class="bi bi-chevron-right"></i></button>
+                <div class="vr mx-1 text-secondary"></div>
+                <button class="btn btn-sm btn-outline-secondary border-0 d-flex align-items-center justify-content-center p-1" disabled><i class="bi bi-zoom-out"></i></button>
+                <span class="small text-muted" style="font-size: 11.5px;">100%</span>
+                <button class="btn btn-sm btn-outline-secondary border-0 d-flex align-items-center justify-content-center p-1" disabled><i class="bi bi-zoom-in"></i></button>
+              </div>
+              <div>
+                <button class="btn btn-sm btn-primary d-flex align-items-center gap-1.5 px-3 py-1 text-white border-0 shadow-sm" id="download-cv-btn" style="background-color: var(--win-blue); font-size: 11.5px;">
+                  <i class="bi bi-download"></i> Download CV (PDF)
+                </button>
+              </div>
+            </div>
+            
+            <!-- Paper container -->
+            <div class="p-4" style="background-color: #cbd5e1; min-height: 100%;">
+              <div class="mx-auto bg-white shadow-lg p-4 p-md-5 rounded-1 border border-secondary-subtle" style="max-width: 680px; font-family: 'Inter', sans-serif;">
+                
+                <!-- Resume Document Header -->
+                <div class="text-center mb-4">
+                  <h1 class="h3 fw-bold text-dark mb-1">Developer Candidate</h1>
+                  <p class="small text-muted mb-2">DEV CHARLES WEB & Web Development Enthusiast</p>
+                  <p class="x-small text-secondary mb-0">London, UK | +44 20 7946 0958 | adeosuncharles15@gmail.com | github.com/charles</p>
+                </div>
+                
+                <hr class="my-3 opacity-15">
+
+                <!-- Summary Section -->
+                <div class="mb-4">
+                  <h2 class="h6 fw-bold text-primary text-uppercase mb-2" style="letter-spacing: 0.5px; font-size: 12px;">Professional Summary</h2>
+                  <p class="small text-muted mb-0" style="line-height: 1.6; font-size: 12.5px;">
+                    Enthusiastic and detail-oriented Information and Communications Technology student with a strong passion for frontend engineering and modern user interfaces. Skilled in building structured, accessible web components with HTML5, CSS3, and Bootstrap 5. Fast learner motivated to explore TypeScript, reactive state engines, and full-stack cloud ecosystems.
+                  </p>
+                </div>
+
+                <!-- Education Section -->
+                <div class="mb-4">
+                  <h2 class="h6 fw-bold text-primary text-uppercase mb-2" style="letter-spacing: 0.5px; font-size: 12px;">Education</h2>
+                  <div class="d-flex justify-content-between align-items-baseline">
+                    <h3 class="h6 fw-semibold text-dark mb-0" style="font-size: 13px;">BSc in Information and Communications Technology</h3>
+                    <span class="x-small text-muted">2025 - Present</span>
+                  </div>
+                  <p class="x-small text-secondary mb-1">University College London (UCL)</p>
+                  <p class="small text-muted mb-0" style="font-size: 12px; line-height: 1.5;">
+                    Focusing on Software Fundamentals, Database Systems, Web Orchestration, and System Infrastructures. Active member of the university computer science guild.
+                  </p>
+                </div>
+
+                <!-- Projects Section -->
+                <div class="mb-4">
+                  <h2 class="h6 fw-bold text-primary text-uppercase mb-2" style="letter-spacing: 0.5px; font-size: 12px;">Academic Projects</h2>
+                  
+                  <div class="mb-3">
+                    <div class="d-flex justify-content-between align-items-baseline">
+                      <h3 class="h6 fw-semibold text-dark mb-0" style="font-size: 13px;">Windows 11 Interactive Portfolio</h3>
+                      <span class="x-small text-secondary">2026</span>
+                    </div>
+                    <p class="small text-muted mb-0" style="font-size: 12px; line-height: 1.5;">
+                      Designed and completed a fully custom Windows 11 desktop experience using modular JavaScript and Bootstrap. Features real-time taskbar system trays, draggable app containers, interactive modals, and localized memory storage.
+                    </p>
+                  </div>
+
+                  <div>
+                    <div class="d-flex justify-content-between align-items-baseline">
+                      <h3 class="h6 fw-semibold text-dark mb-0" style="font-size: 13px;">Tasty Recipes Indexing App</h3>
+                      <span class="x-small text-secondary">2025</span>
+                    </div>
+                    <p class="small text-muted mb-0" style="font-size: 12px; line-height: 1.5;">
+                      Developed a fluid culinary catalog application. Utilized Bootstrap 5 card matrices and fluid grids for fully adaptable viewport scaling on multiple form factors.
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Technical Skills Summary -->
+                <div>
+                  <h2 class="h6 fw-bold text-primary text-uppercase mb-2" style="letter-spacing: 0.5px; font-size: 12px;">Technical Skills</h2>
+                  <div class="row g-2">
+                    <div class="col-6">
+                      <p class="small mb-0" style="font-size: 12px;"><strong class="text-dark">Languages:</strong> HTML5, CSS3, JavaScript (ES6), TypeScript, Python</p>
+                    </div>
+                    <div class="col-6">
+                      <p class="small mb-0" style="font-size: 12px;"><strong class="text-dark">Frameworks:</strong> Bootstrap 5, Tailwind CSS, React, Express</p>
+                    </div>
+                    <div class="col-6">
+                      <p class="small mb-0" style="font-size: 12px;"><strong class="text-dark">Tools & Dev:</strong> Git, GitHub, Vite, npm, Bash CLI, VS Code</p>
+                    </div>
+                    <div class="col-6">
+                      <p class="small mb-0" style="font-size: 12px;"><strong class="text-dark">Core Strengths:</strong> Fluid Layout Design, Web Accessibility, Fast Learning</p>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+    <!-- App Window: Contact Me -->
+    <div class="modal fade win11-modal" id="contact-modal" tabindex="-1" aria-labelledby="contactModalLabel" aria-hidden="true" data-bs-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content win11-window">
+          
+          <!-- Windows 11 Titlebar -->
+          <div class="win11-titlebar">
+            <div class="win11-title">
+              <i class="bi bi-envelope-fill text-danger"></i>
+              <span>Mail - Contact Developer</span>
+            </div>
+            <div class="win11-controls">
+              <button type="button" class="win11-control-btn" data-bs-dismiss="modal" aria-label="Minimize" title="Minimize">
+                <i class="bi bi-dash-lg"></i>
+              </button>
+              <button type="button" class="win11-control-btn d-none d-sm-flex" aria-label="Maximize" title="Maximize">
+                <i class="bi bi-square"></i>
+              </button>
+              <button type="button" class="win11-control-btn close-btn" data-bs-dismiss="modal" aria-label="Close" title="Close">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Windows 11 App Body -->
+          <div class="win11-body">
+            <div class="win11-content-pane p-4">
+              
+              <div class="row g-4">
+                
+                <!-- Left Column: Contact cards & links -->
+                <div class="col-md-5">
+                  <div class="mb-4">
+                    <h2 class="h5 fw-bold text-dark mb-1">Get in Touch</h2>
+                    <p class="small text-muted">I would love to hear from you! Reach out for project ideas, learning collaborations, or opportunities.</p>
+                  </div>
+                  
+                  <div class="d-flex flex-column gap-3">
+                    
+                    <!-- Email Card -->
+                    <a href="mailto:adeosuncharles15@gmail.com" class="d-flex align-items-center gap-3 p-3 bg-white rounded-3 border border-light-subtle shadow-sm text-decoration-none text-dark" style="transition: transform 0.2s, box-shadow 0.2s;">
+                      <div class="rounded-circle d-flex align-items-center justify-content-center bg-danger-subtle text-danger" style="width: 42px; height: 42px; font-size: 18px;">
+                        <i class="bi bi-envelope-at-fill"></i>
+                      </div>
+                      <div class="overflow-hidden">
+                        <span class="small fw-semibold d-block text-dark">Email Address</span>
+                        <span class="x-small text-muted text-truncate d-block" style="font-size: 11px;">adeosuncharles15@gmail.com</span>
+                      </div>
+                    </a>
+
+                    <!-- GitHub Card -->
+                    <a href="https://github.com" target="_blank" class="d-flex align-items-center gap-3 p-3 bg-white rounded-3 border border-light-subtle shadow-sm text-decoration-none text-dark" style="transition: transform 0.2s, box-shadow 0.2s;">
+                      <div class="rounded-circle d-flex align-items-center justify-content-center bg-dark-subtle text-dark" style="width: 42px; height: 42px; font-size: 18px;">
+                        <i class="bi bi-github"></i>
+                      </div>
+                      <div class="overflow-hidden">
+                        <span class="small fw-semibold d-block text-dark">GitHub Profile</span>
+                        <span class="x-small text-muted d-block" style="font-size: 11px;">github.com/charles</span>
+                      </div>
+                    </a>
+
+                    <!-- LinkedIn Card -->
+                    <a href="https://linkedin.com" target="_blank" class="d-flex align-items-center gap-3 p-3 bg-white rounded-3 border border-light-subtle shadow-sm text-decoration-none text-dark" style="transition: transform 0.2s, box-shadow 0.2s;">
+                      <div class="rounded-circle d-flex align-items-center justify-content-center bg-primary-subtle text-primary" style="width: 42px; height: 42px; font-size: 18px;">
+                        <i class="bi bi-linkedin"></i>
+                      </div>
+                      <div class="overflow-hidden">
+                        <span class="small fw-semibold d-block text-dark">LinkedIn Connection</span>
+                        <span class="x-small text-muted d-block" style="font-size: 11px;">linkedin.com/in/charles</span>
+                      </div>
+                    </a>
+
+                  </div>
+                </div>
+                
+                <!-- Right Column: Simple Form with mailto action -->
+                <div class="col-md-7">
+                  <div class="bg-white p-4 rounded-3 border border-light-subtle shadow-sm h-100">
+                    <h3 class="h6 fw-bold text-dark mb-3"><i class="bi bi-send-fill me-2 text-primary" style="font-size: 13px;"></i>Compose Message</h3>
+                    
+                    <form id="contact-form">
+                      <div class="mb-3">
+                        <label for="contact-name" class="form-label x-small fw-semibold text-muted mb-1" style="font-size: 11px;">Full Name</label>
+                        <input type="text" class="form-control form-control-sm border-light-subtle rounded-2" id="contact-name" placeholder="John Doe" required style="font-size: 12.5px; height: 34px;">
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="contact-email" class="form-label x-small fw-semibold text-muted mb-1" style="font-size: 11px;">Email Address</label>
+                        <input type="email" class="form-control form-control-sm border-light-subtle rounded-2" id="contact-email" placeholder="john@example.com" required style="font-size: 12.5px; height: 34px;">
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="contact-subject" class="form-label x-small fw-semibold text-muted mb-1" style="font-size: 11px;">Subject</label>
+                        <input type="text" class="form-control form-control-sm border-light-subtle rounded-2" id="contact-subject" placeholder="Collaboration proposal" required style="font-size: 12.5px; height: 34px;">
+                      </div>
+                      
+                      <div class="mb-3">
+                        <label for="contact-message" class="form-label x-small fw-semibold text-muted mb-1" style="font-size: 11px;">Message Content</label>
+                        <textarea class="form-control form-control-sm border-light-subtle rounded-2" id="contact-message" rows="4" placeholder="Hello! I visited your portfolio and..." required style="font-size: 12.5px;"></textarea>
+                      </div>
+                      
+                      <button type="submit" class="btn btn-sm btn-primary w-100 py-2 border-0 shadow-sm d-flex align-items-center justify-content-center gap-2 rounded-2 mt-2" style="background-color: var(--win-blue); font-size: 13px; height: 38px;">
+                        <i class="bi bi-envelope-open-fill"></i> Launch Mail Client
+                      </button>
+                    </form>
+                    
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+    <!-- App Window: Recycle Bin -->
+    <div class="modal fade win11-modal" id="recycle-modal" tabindex="-1" aria-labelledby="recycleModalLabel" aria-hidden="true" data-bs-backdrop="false">
+      <div class="modal-dialog modal-lg modal-dialog-centered modal-fullscreen-sm-down">
+        <div class="modal-content win11-window">
+          
+          <!-- Windows 11 Titlebar -->
+          <div class="win11-titlebar">
+            <div class="win11-title">
+              <i class="bi bi-trash3-fill text-secondary"></i>
+              <span>Recycle Bin - Retired Projects</span>
+            </div>
+            <div class="win11-controls">
+              <button type="button" class="win11-control-btn" data-bs-dismiss="modal" aria-label="Minimize" title="Minimize">
+                <i class="bi bi-dash-lg"></i>
+              </button>
+              <button type="button" class="win11-control-btn d-none d-sm-flex" aria-label="Maximize" title="Maximize">
+                <i class="bi bi-square"></i>
+              </button>
+              <button type="button" class="win11-control-btn close-btn" data-bs-dismiss="modal" aria-label="Close" title="Close">
+                <i class="bi bi-x-lg"></i>
+              </button>
+            </div>
+          </div>
+          
+          <!-- Windows 11 App Body -->
+          <div class="win11-body">
+            
+            <!-- Recycle Bin Toolbar -->
+            <div class="d-flex align-items-center justify-content-between px-3 py-2 bg-light border-bottom border-light-subtle" id="recycle-toolbar">
+              <div class="d-flex align-items-center gap-2">
+                <span class="small text-muted" style="font-size: 11.5px;"><i class="bi bi-info-circle me-1"></i> Developer Graveyard</span>
+              </div>
+              <div>
+                <button class="btn btn-sm btn-outline-danger d-flex align-items-center gap-1.5 px-3 py-1" id="empty-bin-btn" style="font-size: 11.5px;">
+                  <i class="bi bi-trash3"></i> Empty Recycle Bin
+                </button>
+              </div>
+            </div>
+            
+            <!-- Items Area -->
+            <div class="p-4" style="background-color: #f8fafc; min-height: 100%;">
+              <div class="row row-cols-1 row-cols-md-2 g-3" id="recycle-items-container">
+                
+                <!-- Item 1 -->
+                <div class="col recycle-project-card">
+                  <div class="bg-white p-3 rounded-3 border border-light-subtle shadow-sm h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <div class="d-flex align-items-center gap-2">
+                        <div class="rounded bg-danger-subtle text-danger p-1.5 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                          <i class="bi bi-file-earmark-code-fill"></i>
+                        </div>
+                        <div>
+                          <span class="small fw-semibold text-dark d-block">Hello_ComicSans.html</span>
+                          <span class="x-small text-muted" style="font-size: 10px;">Created: 2024</span>
+                        </div>
+                      </div>
+                      <span class="badge bg-danger text-danger-subtle border border-danger-subtle" style="font-size: 9px; scale: 0.9;">Retired</span>
+                    </div>
+                    <p class="x-small text-muted mb-3 flex-grow-1" style="line-height: 1.4;">
+                      My first learning project. Written in Comic Sans using inline CSS overrides. Centered with manual margin offsets, complete with an infinite popup loop.
+                    </p>
+                    <div class="d-flex gap-2">
+                      <button class="btn btn-sm btn-light flex-grow-1 py-1 restore-project-btn" style="font-size: 11px;"><i class="bi bi-reply-fill"></i> Restore</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="col recycle-project-card">
+                  <div class="bg-white p-3 rounded-3 border border-light-subtle shadow-sm h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <div class="d-flex align-items-center gap-2">
+                        <div class="rounded bg-warning-subtle text-warning p-1.5 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                          <i class="bi bi-grid-3x3-gap-fill"></i>
+                        </div>
+                        <div>
+                          <span class="small fw-semibold text-dark d-block">Center_Div_Failed.css</span>
+                          <span class="x-small text-muted" style="font-size: 10px;">Created: 2024</span>
+                        </div>
+                      </div>
+                      <span class="badge bg-secondary text-secondary-subtle border border-secondary-subtle" style="font-size: 9px; scale: 0.9;">Graveyard</span>
+                    </div>
+                    <p class="x-small text-muted mb-3 flex-grow-1" style="line-height: 1.4;">
+                      A 14-hour historical struggle attempting to center a login card using CSS floats, tables, absolute alignments, and line breaks before learning Flexbox.
+                    </p>
+                    <div class="d-flex gap-2">
+                      <button class="btn btn-sm btn-light flex-grow-1 py-1 restore-project-btn" style="font-size: 11px;"><i class="bi bi-reply-fill"></i> Restore</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="col recycle-project-card">
+                  <div class="bg-white p-3 rounded-3 border border-light-subtle shadow-sm h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <div class="d-flex align-items-center gap-2">
+                        <div class="rounded bg-primary-subtle text-primary p-1.5 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                          <i class="bi bi-send-exclamation-fill"></i>
+                        </div>
+                        <div>
+                          <span class="small fw-semibold text-dark d-block">Auto_Emailer.py</span>
+                          <span class="x-small text-muted" style="font-size: 10px;">Created: 2025</span>
+                        </div>
+                      </div>
+                      <span class="badge bg-danger text-danger-subtle border border-danger-subtle" style="font-size: 9px; scale: 0.9;">Retired</span>
+                    </div>
+                    <p class="x-small text-muted mb-3 flex-grow-1" style="line-height: 1.4;">
+                      Automatic scheduler bot configured to send "Have a great day" emails to my student account. Terminated permanently by email provider security policies.
+                    </p>
+                    <div class="d-flex gap-2">
+                      <button class="btn btn-sm btn-light flex-grow-1 py-1 restore-project-btn" style="font-size: 11px;"><i class="bi bi-reply-fill"></i> Restore</button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="col recycle-project-card">
+                  <div class="bg-white p-3 rounded-3 border border-light-subtle shadow-sm h-100 d-flex flex-column">
+                    <div class="d-flex justify-content-between align-items-start mb-2">
+                      <div class="d-flex align-items-center gap-2">
+                        <div class="rounded bg-info-subtle text-info p-1.5 d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                          <i class="bi bi-calculator-fill"></i>
+                        </div>
+                        <div>
+                          <span class="small fw-semibold text-dark d-block">Concatenator_Calc.js</span>
+                          <span class="x-small text-muted" style="font-size: 10px;">Created: 2025</span>
+                        </div>
+                      </div>
+                      <span class="badge bg-secondary text-secondary-subtle border border-secondary-subtle" style="font-size: 9px; scale: 0.9;">Graveyard</span>
+                    </div>
+                    <p class="x-small text-muted mb-3 flex-grow-1" style="line-height: 1.4;">
+                      A basic calculator script that took prompts, concatenated numbers instead of summing them (e.g. 1 + 1 = 11), and crashed the system with recursion.
+                    </p>
+                    <div class="d-flex gap-2">
+                      <button class="btn btn-sm btn-light flex-grow-1 py-1 restore-project-btn" style="font-size: 11px;"><i class="bi bi-reply-fill"></i> Restore</button>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Empty state (hidden by default) -->
+              <div class="d-none flex-column align-items-center justify-content-center py-5 text-center" id="recycle-empty-state">
+                <i class="bi bi-trash3 text-muted mb-3" style="font-size: 4rem;"></i>
+                <h4 class="h6 fw-bold text-dark mb-1">Recycle Bin is Empty</h4>
+                <p class="x-small text-muted" style="max-width: 250px;">Your old learning struggles have been completely dissolved. Keep writing clean code!</p>
+              </div>
+
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- WINDOWS 11 QUICK SETTINGS PANEL                                   -->
+    <!-- ================================================================= -->
+    <div class="quick-settings-panel" id="quick-settings">
+      <div class="quick-settings-grid">
+        
+        <!-- Quick Setting: Wi-Fi -->
+        <button class="quick-setting-btn active" id="qs-wifi-btn" title="Toggle Wi-Fi" aria-label="Toggle Wi-Fi">
+          <div class="qs-icon">
+            <i class="bi bi-wifi"></i>
+          </div>
+          <span class="qs-label">Wi-Fi</span>
+        </button>
+
+        <!-- Quick Setting: Dark Mode -->
+        <button class="quick-setting-btn" id="qs-dark-btn" title="Toggle Dark Theme" aria-label="Toggle Dark Theme">
+          <div class="qs-icon">
+            <i class="bi bi-moon-stars-fill"></i>
+          </div>
+          <span class="qs-label">Dark theme</span>
+        </button>
+
+        <!-- Quick Setting: Bluetooth -->
+        <button class="quick-setting-btn active" id="qs-bluetooth-btn" title="Toggle Bluetooth" aria-label="Toggle Bluetooth">
+          <div class="qs-icon">
+            <i class="bi bi-bluetooth"></i>
+          </div>
+          <span class="qs-label">Bluetooth</span>
+        </button>
+
+      </div>
+
+      <hr class="opacity-10 my-3">
+
+      <!-- Volume Slider Section -->
+      <div class="qs-slider-row">
+        <i class="bi bi-volume-up-fill" id="qs-volume-icon"></i>
+        <input type="range" class="form-range qs-slider" id="qs-volume-slider" min="0" max="100" value="75" aria-label="Volume Slider">
+        <span class="qs-slider-value" id="qs-volume-val">75%</span>
+      </div>
+
+      <!-- Brightness Slider Section -->
+      <div class="qs-slider-row mt-3">
+        <i class="bi bi-brightness-high-fill"></i>
+        <input type="range" class="form-range qs-slider" id="qs-brightness-slider" min="10" max="100" value="90" aria-label="Brightness Slider">
+        <span class="qs-slider-value" id="qs-brightness-val">90%</span>
+      </div>
+
+      <hr class="opacity-10 my-3">
+
+      <!-- Footer: Battery status and Quick Settings shortcut -->
+      <div class="qs-footer">
+        <div class="qs-battery-status">
+          <i class="bi bi-battery-half text-success" id="qs-battery-icon"></i>
+          <span>72% remaining</span>
+        </div>
+        <div class="qs-settings-link" data-bs-toggle="modal" data-bs-target="#skills-modal" title="All Settings" aria-label="All Settings">
+          <i class="bi bi-gear-fill"></i>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- WINDOWS 11 CALENDAR & NOTIFICATION CENTER PANEL                     -->
+    <!-- ================================================================= -->
+    <div class="notification-center-panel" id="notification-center">
+      <!-- 1. NOTIFICATIONS HEADER -->
+      <div class="nc-header d-flex justify-content-between align-items-center mb-3">
+        <span class="fw-semibold text-dark" style="font-size: 13px;">Notifications</span>
+        <button class="btn btn-link btn-xs p-0 text-decoration-none" id="nc-clear-all-btn" style="font-size: 11px; color: var(--win-blue);">Clear all</button>
+      </div>
+
+      <!-- 2. NOTIFICATION LIST CONTAINER -->
+      <div class="nc-list-container" id="nc-list" style="max-height: 220px; overflow-y: auto; margin-bottom: 15px;">
+        <!-- Notification Item: Charles Message -->
+        <div class="nc-item p-3 mb-2 rounded border border-light-subtle bg-white shadow-sm position-relative transition-all" id="nc-msg-1" style="border-radius: 8px !important;">
+          <div class="d-flex gap-2">
+            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 28px; height: 28px; font-size: 12px;">
+              <i class="bi bi-chat-left-dots-fill"></i>
+            </div>
+            <div style="flex: 1; min-width: 0;">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <span class="small fw-semibold text-dark text-truncate settings-user-display">DEV CHARLES WEB</span>
+                <span class="x-small text-muted" style="font-size: 9px; min-width: max-content;">Just now</span>
+              </div>
+              <p class="mb-1 text-muted text-break" style="font-size: 11px; line-height: 1.35; margin-top: 2px;">Thanks for visiting my portfolio! Let's build something amazing together.</p>
+              <button class="btn btn-xs btn-primary py-0.5 px-2 mt-1 rounded-2 shadow-sm" id="nc-reply-btn" style="font-size: 10px; background-color: var(--win-blue); border: none; height: 22px; line-height: 1;">Reply</button>
+            </div>
+            <button class="btn p-0 text-muted nc-close-btn border-0 shadow-none bg-transparent" data-target="nc-msg-1" style="font-size: 12px; height: max-content; width: 14px;"><i class="bi bi-x-lg"></i></button>
+          </div>
+        </div>
+
+        <!-- Notification Item: System Status -->
+        <div class="nc-item p-3 mb-2 rounded border border-light-subtle bg-white shadow-sm position-relative transition-all" id="nc-msg-2" style="border-radius: 8px !important;">
+          <div class="d-flex gap-2">
+            <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center flex-shrink-0 shadow-sm" style="width: 28px; height: 28px; font-size: 12px;">
+              <i class="bi bi-shield-fill-check"></i>
+            </div>
+            <div style="flex: 1; min-width: 0;">
+              <div class="d-flex justify-content-between align-items-baseline">
+                <span class="small fw-semibold text-dark text-truncate">Windows Hello Security</span>
+                <span class="x-small text-muted" style="font-size: 9px; min-width: max-content;">5m ago</span>
+              </div>
+              <p class="mb-0 text-muted" style="font-size: 11px; line-height: 1.35; margin-top: 2px;">Your developer credentials have been verified successfully.</p>
+            </div>
+            <button class="btn p-0 text-muted nc-close-btn border-0 shadow-none bg-transparent" data-target="nc-msg-2" style="font-size: 12px; height: max-content; width: 14px;"><i class="bi bi-x-lg"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty state label -->
+      <div class="text-center py-4 d-none" id="nc-empty-state">
+        <i class="bi bi-bell-slash text-muted" style="font-size: 1.8rem; opacity: 0.6;"></i>
+        <p class="x-small text-muted mt-2 mb-0">No new notifications</p>
+      </div>
+
+      <hr class="opacity-10 my-2">
+
+      <!-- 3. COMPACT CALENDAR -->
+      <div class="nc-calendar-widget">
+        <div class="d-flex justify-content-between align-items-center mb-2 px-1">
+          <span class="fw-semibold text-dark" id="nc-calendar-month-year" style="font-size: 12px; letter-spacing: 0.2px;">July 2026</span>
+          <div class="d-flex gap-2">
+            <button class="btn btn-xs btn-light p-0 d-flex align-items-center justify-content-center border-light-subtle rounded-1 shadow-sm" id="nc-cal-prev" style="width: 22px; height: 22px; font-size: 10px; background: rgba(255,255,255,0.8);"><i class="bi bi-chevron-up"></i></button>
+            <button class="btn btn-xs btn-light p-0 d-flex align-items-center justify-content-center border-light-subtle rounded-1 shadow-sm" id="nc-cal-next" style="width: 22px; height: 22px; font-size: 10px; background: rgba(255,255,255,0.8);"><i class="bi bi-chevron-down"></i></button>
+          </div>
+        </div>
+        
+        <div class="nc-calendar-grid">
+          <!-- Days of Week Header -->
+          <div class="nc-cal-days-header d-grid text-center mb-1" style="grid-template-columns: repeat(7, 1fr); font-size: 10px; font-weight: 600; color: var(--win-text-muted);">
+            <span>Su</span><span>Mo</span><span>Tu</span><span>We</span><span>Th</span><span>Fr</span><span>Sa</span>
+          </div>
+          <!-- Days Numbers Grid -->
+          <div class="nc-cal-days-grid d-grid text-center" id="nc-cal-days" style="grid-template-columns: repeat(7, 1fr); row-gap: 4px; font-size: 11px;">
+            <!-- Will be dynamically populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- Full-screen absolute screen brightness shade -->
+    <div class="brightness-overlay" id="brightness-overlay"></div>
+
+
+    <!-- Bootstrap 5 JS Bundle (Includes Popper.js for tooltips) via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom Windows 11 Desktop Interactive Script -->
+    <script type="module" src="/src/js/script.js"></script>
+  </body>
+</html>

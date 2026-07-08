@@ -1,0 +1,6 @@
+{
+  "name": "Windows 11 Developer Portfolio",
+  "description": "A developer portfolio website styled like the Windows 11 desktop, built with Bootstrap 5 and vanilla CSS/JS.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
